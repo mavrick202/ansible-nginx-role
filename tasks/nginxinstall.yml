@@ -1,0 +1,51 @@
+- name: Perform APT update
+  shell: apt-get update
+  when: ansible_os_family == "Debian"
+
+- name: Install Nginx in Ubuntu Servers
+  apt:
+    name: nginx
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Perform APT update
+  shell: service nginx start
+  when: ansible_os_family == "Debian"
+
+- name: Perform YUM update
+  shell: yum update -y
+  when: ansible_os_family == "RedHat"
+
+- name: Install epel-release in RedHat Servers
+  yum:
+    name: epel-release
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Install Nginx in RedHat Servers
+  yum:
+     name: nginx
+     state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Copy the files to index destination folder.
+  copy: >
+     src=index.html
+     dest=/var/www/html/index.nginx-debian.html
+     owner=root
+     group=root
+     mode=0644
+- name: Copy the style files to  destination folder.
+  copy: >
+     src=style.css
+     dest=/var/www/html/style.css
+     owner=root
+     group=root
+     mode=0644
+- name: Copy the javascript files to  destination folder.
+  copy: >
+     src=scorekeeper.js
+     dest=/var/www/html/scorekeeper.js
+     owner=root
+     group=root
+     mode=0644
